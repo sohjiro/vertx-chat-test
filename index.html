@@ -10,13 +10,17 @@
 
         var eb = new vertx.EventBus('http://localhost:8080/eventbus');
         eb.onopen = function() {
+          $('#status').text('Connected...');
           eb.registerHandler('some-address', function(message) {
-            console.log('received a message: ' + JSON.stringify(message));
+            $('#messages').append(message);
           })
         }
 
         $("#send").click( function() {
-          eb.send('some-address', $('#message').val());
+          var message = $('#message').val();
+          $('#messages').append(message);
+          eb.send('some-address', message);
+          $('#message').val('');
         });
       });
     </script>
@@ -24,7 +28,10 @@
   </head>
 
   <body>
-    <div id="messages"></div>
+    <div>
+      <div id="status"></div>
+      <div id="messages"></div>
+    </div>
     <p>
       <input id="message" placeholder="Message">
       <button id="send"> . : Send : . </button>
