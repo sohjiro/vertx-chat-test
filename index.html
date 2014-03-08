@@ -12,14 +12,13 @@
         eb.onopen = function() {
           $('#status').text('Connected...');
           eb.registerHandler('some-address', function(message) {
-            $('#messages').append(message);
+            $('#messages').append('<p>' + message + '</p>');
           })
         }
 
         $("#send").click( function() {
           var message = $('#message').val();
-          $('#messages').append(message);
-          eb.send('some-address', message);
+          eb.publish('some-address', message);
           $('#message').val('');
         });
       });
@@ -29,7 +28,7 @@
 
   <body>
     <div>
-      <div id="status"></div>
+      <div id="status">Disabled...</div>
       <div id="messages"></div>
     </div>
     <p>
