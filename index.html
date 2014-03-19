@@ -7,13 +7,22 @@
 
     <script>
       $(function() {
+        var eb = new vertx.EventBus('http://localhost:9090/eventbus');
 
-        var eb = new vertx.EventBus('http://localhost:8080/eventbus');
         eb.onopen = function() {
-          $('#status').text('Connected...');
+          $('#status').click(function() {
+            $('#status').text('Connected...');
+            eb.send("register-user", $('#username').val());
+          });
+
           eb.registerHandler('some-address', function(message) {
             $('#messages').append('<p>' + message + '</p>');
-          })
+          });
+
+          eb.registerHandler('new-connection', function(newUser) {
+            $('#container').css('display', 'inline');
+            $('#users').append('<p>' + newUser + '</p>');
+          });
         }
 
         $("#send").click( function() {
@@ -28,13 +37,22 @@
 
   <body>
     <div>
-      <div id="status">Disabled...</div>
-      <div id="messages"></div>
+      <input type="text" placeholder="Username" id="username">
+      <button id="status"> . : Connect : . </button>
     </div>
-    <p>
-      <input id="message" placeholder="Message">
-      <button id="send"> . : Send : . </button>
-    </p>
+
+    <div id="container" style="display:none;">
+      <div id="users">
+        <h3> On line users </h3>
+      </div>
+
+      <div id="messages"></div>
+      <p>
+        <input id="message" placeholder="Message">
+        <button id="send"> . : Send : . </button>
+      </p>
+    </div>
+
   </body>
 
 </html>
