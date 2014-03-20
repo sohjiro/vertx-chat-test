@@ -13,7 +13,8 @@ vertx.createSockJSServer(server).bridge(prefix: '/eventbus', [[:]], [[:]])
 
 def eb = vertx.eventBus
 eb.registerHandler("register-user") { message ->
-  eb.publish("new-connection", message.body)
+  def users = vertx.sharedData.getSet('users')
+  users << message.body
 }
 
 server.listen(9090)
