@@ -14,7 +14,6 @@
             var username = $('#username').val()
             eb.send("register-user", username, function(incoming) {
               $('#login').html('<h1> . : ' + username + ' - Connected : . </h1>');
-              $('#control').css('display', 'block');
 
               $.each(incoming.users, function() {
                 $('#users').append('<li>' + this + '</li>');
@@ -28,12 +27,11 @@
           });
 
           $('#users').on('click', 'li', function() {
-            // console.log($(this).text());
+            $('#control').css('display', 'block');
           });
         }
       });
     </script>
-
   </head>
 
   <body>
