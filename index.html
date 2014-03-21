@@ -11,8 +11,9 @@
 
         eb.onopen = function() {
           $('#status').click(function() {
-            eb.send("register-user", $('#username').val(), function(incoming) {
-              $('#login').html('<h1> . : Connected : . </h1>');
+            var username = $('#username').val()
+            eb.send("register-user", username, function(incoming) {
+              $('#login').html('<h1> . : ' + username + ' - Connected : . </h1>');
               $('#control').css('display', 'block');
 
               $.each(incoming.users, function() {
