@@ -22,4 +22,9 @@ $(function() {
   $('#users').on('click', 'li', function() {
     $('#control').css('display', 'block');
   });
+
+  $('#sendMessage').click(function() {
+    eb.send('chat-message', $('#message').val());
+  });
+
 });
