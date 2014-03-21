@@ -7,6 +7,7 @@ server.requestHandler { req ->
   if (req.uri == '/vertxbus.js') req.response.sendFile('vertxbus.js')
   if (req.uri == '/jquery.js') req.response.sendFile('bower_components/jquery/jquery.js')
   if (req.uri == '/sockjs.js') req.response.sendFile('bower_components/sockjs/sockjs.js')
+  if (req.uri == '/app.js') req.response.sendFile('app.js')
 }
 
 vertx.createSockJSServer(server).bridge(prefix: '/eventbus', [[:]], [[:]])
