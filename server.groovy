@@ -21,4 +21,8 @@ eb.registerHandler("register-user") { message ->
   message.reply([users : users - message.body])
 }
 
+eb.registerHandler("chat-message") { message ->
+  println message.body
+};
+
 server.listen(9090)
