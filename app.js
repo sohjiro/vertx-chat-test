@@ -3,9 +3,9 @@ $(function() {
 
   eb.onopen = function() {
     $('#status').click(function() {
-      var username = $('#username').val()
-      eb.send("register-user", username, function(incoming) {
-        $('#login').html('<h1> . : ' + username + ' - Connected : . </h1>');
+      eb.send("register-user", $('#username').val(), function(incoming) {
+        $('#login').css('display', 'none');
+        $('#logged').html('<h1> . : ' + $('#username').val() + ' - Connected : . </h1>');
 
         $.each(incoming.users, function() {
           $('#users').append('<li>' + this + '</li>');
@@ -21,6 +21,8 @@ $(function() {
 
   $('#users').on('click', 'li', function() {
     $('#control').css('display', 'block');
+
+    eb.send('register-chat', $(this).text());
   });
 
   $('#sendMessage').click(function() {
