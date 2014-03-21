@@ -22,7 +22,7 @@ $(function() {
   $('#users').on('click', 'li', function() {
     $('#control').css('display', 'block');
 
-    eb.send('register-chat', $(this).text());
+    // eb.send('register-chat', $(this).text());
   });
 
   $('#sendMessage').click(function() {
