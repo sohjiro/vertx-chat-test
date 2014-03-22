@@ -21,8 +21,10 @@ eb.registerHandler("register-user") { message ->
   message.reply([users : users - message.body])
 }
 
-eb.registerHandler("chat-message") { message ->
-  println message.body
+eb.registerHandler("chat-message") { data ->
+  def dataToSend = [ message : data.body.message, from : data.body.from ]
+  eb.send( data.body.to, dataToSend )
+  data.reply(dataToSend)
 };
 
 server.listen(9090)
