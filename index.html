@@ -4,55 +4,29 @@
     <script src="jquery.js"></script>
     <script src="sockjs.js"></script>
     <script src="vertxbus.js"></script>
-
-    <script>
-      $(function() {
-        var eb = new vertx.EventBus('http://localhost:9090/eventbus');
-
-        eb.onopen = function() {
-          $('#status').click(function() {
-            $('#status').text('Connected...');
-            eb.send("register-user", $('#username').val());
-          });
-
-          eb.registerHandler('some-address', function(message) {
-            $('#messages').append('<p>' + message + '</p>');
-          });
-
-          eb.registerHandler('new-connection', function(newUser) {
-            $('#container').css('display', 'inline');
-            $('#users').append('<p>' + newUser + '</p>');
-          });
-        }
-
-        $("#send").click( function() {
-          var message = $('#message').val();
-          eb.publish('some-address', message);
-          $('#message').val('');
-        });
-      });
-    </script>
-
+    <script src="app.js"></script>
   </head>
 
   <body>
-    <div>
+    <div id="login">
       <input type="text" placeholder="Username" id="username">
       <button id="status"> . : Connect : . </button>
     </div>
 
-    <div id="container" style="display:none;">
-      <div id="users">
-        <h3> On line users </h3>
-      </div>
+    <div id="logged"></div>
 
-      <div id="messages"></div>
-      <p>
-        <input id="message" placeholder="Message">
-        <button id="send"> . : Send : . </button>
-      </p>
+    <div>
+      <h1> Online users </h1>
+      <ul id="users">
+      </ul>
+    </div>
+    <div id="original" style="display: none;">
+      <div class="messages"></div>
+      <input type="text" placeholder="Message">
+      <button class="sendMessage"> . : Send : . </button>
     </div>
 
+    <div id="window"></div>
   </body>
 
 </html>
