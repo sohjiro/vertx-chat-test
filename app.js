@@ -15,18 +15,33 @@ $(function() {
           $('#users').append('<li>' + message + '</li>');
         });
 
+        eb.registerHandler($('#username').val(), function(data) {
+          if($('div#' + data.from).length == 0) {
+            var windowMessages = $('#original').clone().attr('id', data.from).css('display', 'block');
+            $('#window').append(windowMessages);
+          }
+
+          $('#' + data.from + ' .messages').append('<p>' + data.from + ' : ' +  data.message + '</p>');
+        });
+
       });
     });
   }
 
   $('#users').on('click', 'li', function() {
-    $('#control').css('display', 'block');
-
-    // eb.send('register-chat', $(this).text());
+    var windowMessages = $('#original').clone().attr('id', $(this).text()).css('display', 'block');
+    $('#window').append(windowMessages);
   });
 
-  $('#sendMessage').click(function() {
-    eb.send('chat-message', $('#message').val());
+  $('#window').on('click', 'button', function() {
+    var messageTo = $(this).parent().attr('id');
+    eb.send('chat-message', {
+      from : $('#username').val(),
+      message : $(this).siblings().filter('input').val(),
+      to : messageTo
+    }, function(data) {
+      $('#' + messageTo + ' .messages').append('<p>' + data.from + ' : ' +  data.message + '</p>');
+    });
   });
 
 });
